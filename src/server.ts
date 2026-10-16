@@ -13,6 +13,7 @@ import { getSkill, listResources } from './skills';
 import { listPrompts, getPromptContent, PROMPTS } from './prompts';
 import { auditPage } from './audit';
 import { detectConvention, extractTokens, checkSchema } from './checks';
+import { scorecard26, checkAiReadiness } from './scorecard';
 
 export function buildServer(env: Env): Server {
 	const server = new Server(
@@ -83,19 +84,6 @@ export function buildServer(env: Env): Server {
 	server.setRequestHandler(ListToolsRequestSchema, async () => ({
 		tools: [
 			{
-				name: 'ping',
-				description: 'Test tool that responds with pong',
-				inputSchema: {
-					type: 'object',
-					properties: {
-						message: {
-							type: 'string',
-							description: 'Optional message to echo back',
-						},
-					},
-				},
-			},
-			{
 				name: 'audit_page',
 				description: 'Audit a web page for SEO, accessibility, performance, and best practices',
 				inputSchema: {
@@ -104,6 +92,20 @@ export function buildServer(env: Env): Server {
 						url: {
 							type: 'string',
 							description: 'The URL of the page to audit',
+						},
+					},
+					required: ['url'],
+				},
+			},
+			{
+				name: 'scorecard_26',
+				description: 'Complete /26 SaaS website scorecard across 6 categories: AI readiness, Messaging, UX, Performance, Analytics, Accessibility',
+				inputSchema: {
+					type: 'object',
+					properties: {
+						url: {
+							type: 'string',
+							description: 'The URL to score',
 						},
 					},
 					required: ['url'],
@@ -151,25 +153,53 @@ export function buildServer(env: Env): Server {
 					required: ['url'],
 				},
 			},
+			{
+				name: 'check_ai_readiness',
+				description: 'Check AI readiness: llms.txt, robots.txt AI bot rules, meta tags, and JSON-LD',
+				inputSchema: {
+					type: 'object',
+					properties: {
+						url: {
+							type: 'string',
+							description: 'The URL to check',
+						},
+					},
+					required: ['url'],
+				},
+			},
 		],
 	}));
 
 	server.setRequestHandler(CallToolRequestSchema, async (request) => {
-		if (request.params.name === 'ping') {
-			const args = request.params.arguments as { message?: string };
+		if (request.params.name === 'audit_page') {
+			const args = request.params.arguments as { url: string };
+			const result = await auditPage(args.url, env);
 			return {
 				content: [
 					{
 						type: 'text',
-						text: args?.message ? `pong: ${args.message}` : 'pong',
+						text: JSON.stringify(result, null, 2),
 					},
 				],
 			};
 		}
 		
-		if (request.params.name === 'audit_page') {
+		if (request.params.name === 'scorecard_26') {
 			const args = request.params.arguments as { url: string };
-			const result = await auditPage(args.url, env);
+			const result = await scorecard26(args.url, env);
+			return {
+				content: [
+					{
+						type: 'text',
+						text: JSON.stringify(result, null, 2),
+					},
+				],
+			};
+		}
+		
+		if (request.params.name === 'check_ai_readiness') {
+			const args = request.params.arguments as { url: string };
+			const result = await checkAiReadiness(args.url, env);
 			return {
 				content: [
 					{

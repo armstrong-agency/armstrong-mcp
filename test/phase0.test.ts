@@ -9,7 +9,7 @@ describe('Phase 0: Scaffold', () => {
 		expect(server).toBeDefined();
 	});
 	
-	it('should list ping tool', async () => {
+	it('should list tools', async () => {
 		const env = { RATE_LIMITER: null, CRUX_API_KEY: undefined };
 		const server = buildServer(env);
 		
@@ -21,9 +21,9 @@ describe('Phase 0: Scaffold', () => {
 		);
 		
 		expect(result).toBeDefined();
-		expect((result as any).tools.length).toBeGreaterThanOrEqual(1);
-		const pingTool = (result as any).tools.find((t: any) => t.name === 'ping');
-		expect(pingTool).toBeDefined();
-		expect(pingTool.name).toBe('ping');
+		expect((result as any).tools.length).toBe(6);
+		const toolNames = (result as any).tools.map((t: any) => t.name);
+		expect(toolNames).toContain('audit_page');
+		expect(toolNames).toContain('scorecard_26');
 	});
 });

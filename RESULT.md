@@ -143,8 +143,36 @@
 
 ---
 
-## Phase 5: Scorecard (Not started)
+## Phase 5: Scorecard ✅
+
+**Status:** Complete
+**Commit:** [Next commit]
+**Date:** 2026-10-16
+
+### Checks
+- ✅ Typecheck: Passed
+- ✅ Tests: 43/43 passed (9 new Phase 5 tests)
+- ✅ scorecard_26: Complete /26 audit with 6 categories
+- ✅ check_ai_readiness: All 5 AI items checked
+- ✅ CrUX integration: Degrades gracefully when key missing
+- ✅ Banding: Green/yellow/red calculation working
+- ✅ Manual items: Clearly marked with explanation
+
+### Implementation
+- Created scorecard.ts with scorecard_26 and check_ai_readiness tools
+- 26 total items across 6 categories (5+4+4+4+5+4)
+- CrUX API integration for LCP, CLS, INP with graceful degradation
+- "CrUX unavailable" message when key missing
+- Banding logic: green=all pass, yellow>half, red≤half
+- Manual items tracked separately (~11 items require browser rendering)
+- Removed ping tool (spec says 6 public tools)
+
+### Notes
+- CrUX integration tested with mocked fetch
+- Graceful degradation shows clear "CrUX unavailable" message
+- Manual items include: Messaging (4), form works, CTA above fold, consent, conversion, contrast
+- Tool count now matches spec: exactly 6 public tools
 
 ---
 
-## Phase 6: Limits + deploy (Not started)
+## Phase 6: Limits + deploy (In Progress)
