@@ -1,0 +1,27 @@
+{
+	"name": "armstrong-mcp",
+	"version": "1.0.0",
+	"private": true,
+	"scripts": {
+		"deploy": "wrangler deploy",
+		"dev": "wrangler dev",
+		"start": "wrangler dev",
+		"test": "vitest",
+		"test:unit": "vitest run",
+		"typecheck": "tsc --noEmit",
+		"lint": "eslint src",
+		"cf-typegen": "wrangler types"
+	},
+	"dependencies": {
+		"@modelcontextprotocol/sdk": "^1.32.1",
+		"agents": "^0.0.72"
+	},
+	"devDependencies": {
+		"@cloudflare/vitest-plugin": "^1.0.0",
+		"@cloudflare/workers-types": "^4.20250103.0",
+		"@types/node": "^22.0.0",
+		"typescript": "^5.5.2",
+		"vitest": "~4.1.0",
+		"wrangler": "^4"
+	}
+}

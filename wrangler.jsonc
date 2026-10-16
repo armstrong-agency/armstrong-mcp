@@ -1,0 +1,21 @@
+{
+	"name": "armstrong-mcp",
+	"main": "src/index.ts",
+	"compatibility_date": "2024-10-01",
+	"compatibility_flags": ["nodejs_compat"],
+	"observability": {
+		"enabled": true
+	},
+	"limits": {
+		"cpu_ms": 30000
+	},
+	"routes": [
+		{
+			"pattern": "mcp.armstrong.so/mcp",
+			"custom_domain": true
+		}
+	],
+	"vars": {
+		"ENVIRONMENT": "production"
+	}
+}
