@@ -21,7 +21,9 @@ describe('Phase 0: Scaffold', () => {
 		);
 		
 		expect(result).toBeDefined();
-		expect((result as any).tools).toHaveLength(1);
-		expect((result as any).tools[0].name).toBe('ping');
+		expect((result as any).tools.length).toBeGreaterThanOrEqual(1);
+		const pingTool = (result as any).tools.find((t: any) => t.name === 'ping');
+		expect(pingTool).toBeDefined();
+		expect(pingTool.name).toBe('ping');
 	});
 });

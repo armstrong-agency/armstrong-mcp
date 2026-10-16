@@ -11,6 +11,7 @@ import {
 import type { Env } from './types';
 import { getSkill, listResources } from './skills';
 import { listPrompts, getPromptContent, PROMPTS } from './prompts';
+import { auditPage } from './audit';
 
 export function buildServer(env: Env): Server {
 	const server = new Server(
@@ -93,6 +94,20 @@ export function buildServer(env: Env): Server {
 					},
 				},
 			},
+			{
+				name: 'audit_page',
+				description: 'Audit a web page for SEO, accessibility, performance, and best practices',
+				inputSchema: {
+					type: 'object',
+					properties: {
+						url: {
+							type: 'string',
+							description: 'The URL of the page to audit',
+						},
+					},
+					required: ['url'],
+				},
+			},
 		],
 	}));
 
@@ -108,6 +123,20 @@ export function buildServer(env: Env): Server {
 				],
 			};
 		}
+		
+		if (request.params.name === 'audit_page') {
+			const args = request.params.arguments as { url: string };
+			const result = await auditPage(args.url, env);
+			return {
+				content: [
+					{
+						type: 'text',
+						text: JSON.stringify(result, null, 2),
+					},
+				],
+			};
+		}
+		
 		throw new Error(`Unknown tool: ${request.params.name}`);
 	});
 

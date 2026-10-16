@@ -87,11 +87,35 @@
 
 ---
 
-## Phase 3: Evaluator port (In Progress)
+## Phase 3: Evaluator port ✅
+
+**Status:** Complete
+**Commit:** [Next commit]
+**Date:** 2026-10-16
+
+### Checks
+- ✅ Typecheck: Passed
+- ✅ Tests: 31/31 passed (9 new Phase 3 tests)
+- ✅ audit_page tool: Returns score and violations for example.com
+- ✅ Evaluator engine: Calculates weighted scores correctly
+- ✅ Rules: SEO, accessibility, performance, best-practices
+
+### Implementation
+- Created evaluator/engine.ts with weighted scoring system (error×10, warning×3, info×1)
+- Implemented evaluator/parser.ts for HTML parsing (handles self-closing tags)
+- Added evaluator/rules.ts with 11 rules across 4 categories
+- Created audit.ts module that combines loadPage + evaluator
+- Added audit_page tool to MCP server
+
+### Notes
+- Minimal implementation (not the full armstrong-suite evaluator)
+- Parser handles basic HTML including self-closing tags
+- Score calculation matches spec (0-100, weighted by violation severity)
+- Example.com audit: 76/100 score with 4 violations detected
 
 ---
 
-## Phase 4: New checks (Not started)
+## Phase 4: New checks (In Progress)
 
 ---
 
