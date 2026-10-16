@@ -12,6 +12,7 @@ import type { Env } from './types';
 import { getSkill, listResources } from './skills';
 import { listPrompts, getPromptContent, PROMPTS } from './prompts';
 import { auditPage } from './audit';
+import { detectConvention, extractTokens, checkSchema } from './checks';
 
 export function buildServer(env: Env): Server {
 	const server = new Server(
@@ -108,6 +109,48 @@ export function buildServer(env: Env): Server {
 					required: ['url'],
 				},
 			},
+			{
+				name: 'detect_convention',
+				description: 'Detect the naming convention used in a Webflow site (Client-First, Mast, mixed, or none)',
+				inputSchema: {
+					type: 'object',
+					properties: {
+						url: {
+							type: 'string',
+							description: 'The URL of the site to analyze',
+						},
+					},
+					required: ['url'],
+				},
+			},
+			{
+				name: 'extract_tokens',
+				description: 'Extract design system tokens (colors, fonts, spacing) from a site into DESIGN.md format',
+				inputSchema: {
+					type: 'object',
+					properties: {
+						url: {
+							type: 'string',
+							description: 'The URL to extract tokens from',
+						},
+					},
+					required: ['url'],
+				},
+			},
+			{
+				name: 'check_schema',
+				description: 'Find and validate JSON-LD structured data blocks on a page',
+				inputSchema: {
+					type: 'object',
+					properties: {
+						url: {
+							type: 'string',
+							description: 'The URL to check for JSON-LD',
+						},
+					},
+					required: ['url'],
+				},
+			},
 		],
 	}));
 
@@ -127,6 +170,45 @@ export function buildServer(env: Env): Server {
 		if (request.params.name === 'audit_page') {
 			const args = request.params.arguments as { url: string };
 			const result = await auditPage(args.url, env);
+			return {
+				content: [
+					{
+						type: 'text',
+						text: JSON.stringify(result, null, 2),
+					},
+				],
+			};
+		}
+		
+		if (request.params.name === 'detect_convention') {
+			const args = request.params.arguments as { url: string };
+			const result = await detectConvention(args.url, env);
+			return {
+				content: [
+					{
+						type: 'text',
+						text: JSON.stringify(result, null, 2),
+					},
+				],
+			};
+		}
+		
+		if (request.params.name === 'extract_tokens') {
+			const args = request.params.arguments as { url: string };
+			const result = await extractTokens(args.url, env);
+			return {
+				content: [
+					{
+						type: 'text',
+						text: result.markdown,
+					},
+				],
+			};
+		}
+		
+		if (request.params.name === 'check_schema') {
+			const args = request.params.arguments as { url: string };
+			const result = await checkSchema(args.url, env);
 			return {
 				content: [
 					{

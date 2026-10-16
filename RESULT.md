@@ -115,7 +115,31 @@
 
 ---
 
-## Phase 4: New checks (In Progress)
+## Phase 4: New checks ✅
+
+**Status:** Complete
+**Commit:** [Next commit]
+**Date:** 2026-10-16
+
+### Checks
+- ✅ Typecheck: Passed
+- ✅ Tests: 34/34 passed (3 new Phase 4 tests)
+- ✅ detect_convention: Identifies Client-First, Mast, mixed, or none
+- ✅ extract_tokens: Extracts colors and fonts into DESIGN.md format
+- ✅ check_schema: Finds and validates JSON-LD blocks
+
+### Implementation
+- Created checks.ts module with three new tools
+- detect_convention: Pattern matching for Client-First and Mast class naming
+- extract_tokens: Regex extraction of colors and fonts from inline styles
+- check_schema: JSON-LD parsing and validation with missing type detection
+- All tools integrated into MCP server
+
+### Notes
+- detect_convention uses regex patterns for both conventions
+- extract_tokens provides markdown output ready for DESIGN.md
+- check_schema validates @context and @type presence
+- All three tools use loadPage for consistent fetching
 
 ---
 
