@@ -2,7 +2,7 @@ import { describe, it, expect } from 'vitest';
 import { detectConvention, extractTokens, checkSchema } from '../src/checks';
 
 const mockEnv = {
-	RATE_LIMITER: null,
+	
 	CRUX_API_KEY: undefined,
 } as any;
 

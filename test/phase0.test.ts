@@ -3,14 +3,14 @@ import { buildServer } from '../src/server';
 
 describe('Phase 0: Scaffold', () => {
 	it('should create a server with ping tool', async () => {
-		const env = { RATE_LIMITER: null, CRUX_API_KEY: undefined };
+		const env = {  CRUX_API_KEY: undefined };
 		const server = buildServer(env);
 		
 		expect(server).toBeDefined();
 	});
 	
 	it('should list tools', async () => {
-		const env = { RATE_LIMITER: null, CRUX_API_KEY: undefined };
+		const env = {  CRUX_API_KEY: undefined };
 		const server = buildServer(env);
 		
 		const result = await server['_requestHandlers'].get(

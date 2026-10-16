@@ -2,12 +2,12 @@ import { describe, it, expect, vi } from 'vitest';
 import { checkAiReadiness, scorecard26 } from '../src/scorecard';
 
 const mockEnv = {
-	RATE_LIMITER: null,
+	
 	CRUX_API_KEY: undefined,
 } as any;
 
 const mockEnvWithCrux = {
-	RATE_LIMITER: null,
+	
 	CRUX_API_KEY: 'mock-key-for-testing',
 } as any;
 

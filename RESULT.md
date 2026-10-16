@@ -175,4 +175,40 @@
 
 ---
 
-## Phase 6: Limits + deploy (In Progress)
+## Phase 6: Limits + deploy ✅
+
+**Status:** Complete
+**Commit:** [Next commit]
+**Date:** 2026-10-16
+
+### Checks
+- ✅ Typecheck: Passed
+- ✅ Tests: 49/49 passed (6 new Phase 6 tests)
+- ✅ Rate limiting: In-memory implementation working
+- ✅ Per-IP isolation: Each IP tracked separately
+- ✅ Tool/resource limits: 30/min vs 120/min
+- ✅ wrangler.jsonc: Configured for mcp.armstrong.so
+- ✅ DEPLOY.md: Complete deployment guide
+- ✅ Bundled fallbacks: Structure created
+
+### Implementation
+- In-memory rate limiting with automatic cleanup
+- Limits: Tools 30/min 500/day, Resources 120/min 10k/day
+- Per-IP tracking using CF-Connecting-IP header
+- Updated wrangler.jsonc: custom domain, nodejs_compat, production config
+- Comprehensive DEPLOY.md with WAF, monitoring, rollback procedures
+- Bundled skills directory created (content to be added at build)
+- Removed RATE_LIMITER binding (using in-memory for MVP)
+
+### Notes
+- Rate limiting is per-instance (not distributed)
+- For distributed rate limiting, see DEPLOY.md (Workers Rate Limiting API, DO, or KV)
+- WAF kill switch documented (create rule, keep disabled)
+- Custom domain configured in wrangler.jsonc: mcp.armstrong.so
+- All configuration ready for deployment (but NOT deployed per instructions)
+
+---
+
+## All Phases Complete ✅
+
+All 7 phases (0-6) successfully implemented and tested.
