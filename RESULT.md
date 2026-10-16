@@ -57,11 +57,37 @@
 
 ---
 
-## Phase 2: Fetch + guard (In Progress)
+## Phase 2: Fetch + guard ✅
+
+**Status:** Complete
+**Commit:** [Next commit]
+**Date:** 2026-10-16
+
+### Checks
+- ✅ Typecheck: Passed
+- ✅ Tests: 22/22 passed (15 new Phase 2 tests)
+- ✅ SSRF blocks: localhost, 127.0.0.1, 10.0.0.1, 192.168.x, 172.16.x, non-standard ports
+- ✅ Fetch limits: 10s timeout, 2MB body cap, 5 redirects
+- ✅ loadPage: Fetches example.com successfully
+- ✅ loadSiteFile: Fetches robots.txt and sitemap.xml
+
+### Implementation
+- Created page.ts module with loadPage and loadSiteFile functions
+- SSRF protection: blocks IP literals, private ranges, blocked hosts, non-HTTP(S), non-80/443 ports
+- Fetch limits: 10s timeout, 2MB cap, 5 max redirects
+- Re-validates URL after each redirect
+- Workers Cache API with 10-minute cache
+- User-Agent: ArmstrongMCP/1.0
+
+### Notes
+- All SSRF guards working correctly
+- Redirects are followed and re-validated
+- Body size checked both via Content-Length and streaming
+- Cache prevents repeated fetches
 
 ---
 
-## Phase 3: Evaluator port (Not started)
+## Phase 3: Evaluator port (In Progress)
 
 ---
 
