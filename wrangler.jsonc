@@ -1,0 +1,14 @@
+{
+	"name": "armstrong-mcp",
+	"main": "src/index.ts",
+	"compatibility_date": "2024-10-01",
+	"observability": {
+		"enabled": true
+	},
+	"limits": {
+		"cpu_ms": 30000
+	},
+	"rate_limit": {
+		"binding": "RATE_LIMITER"
+	}
+}
